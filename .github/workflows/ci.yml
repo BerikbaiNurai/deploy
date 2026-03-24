@@ -8,7 +8,7 @@ on:
 
 defaults:
   run:
-    working-directory: ./   # запуск из корня репозитория
+    working-directory: ./lab102
 
 jobs:
   test:
