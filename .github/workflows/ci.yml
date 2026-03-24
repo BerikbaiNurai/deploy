@@ -1,10 +1,9 @@
 name: CI
-
 on:
   push:
-    branches: [master]
+    branches: [main]
   pull_request:
-    branches: [master]
+    branches: [main]
 
 jobs:
   test:
@@ -12,24 +11,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
-
       - name: Install dependencies
-        run: cd task2/lab102 && npm ci
-
+        run: npm ci
       - name: Run tests
-        run: cd task2/lab102 && npm test -- --coverage
-
+        run: npm test -- --coverage
       - name: Upload coverage
         uses: actions/upload-artifact@v4
         with:
           name: coverage
-          path: task2/lab102/coverage/
+          path: coverage/
 
   build:
     name: Build
@@ -37,21 +32,17 @@ jobs:
     needs: test
     steps:
       - uses: actions/checkout@v4
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
-
       - name: Install dependencies
-        run: cd task2/lab102 && npm ci
-
+        run: npm ci
       - name: Build
-        run: cd task2/lab102 && npm run build
-
+        run: npm run build
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: dist
-          path: task2/lab102/dist/
+          path: dist/
